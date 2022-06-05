@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file alias="acronym_icon">icon/acronym.ico</file>
+    </qresource>
+</RCC>
