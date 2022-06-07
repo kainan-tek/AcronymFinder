@@ -1,7 +1,6 @@
 import os
 import sys
 import time
-from tkinter.messagebox import YES
 from log import Log
 import global_var as gl
 import resrc.resource as res
