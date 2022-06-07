@@ -109,17 +109,15 @@ class MainWindow(QMainWindow):
                 tmp_flag = True
                 break
         if tmp_flag:
-            rst = self.msgbox.question(self, "", "This acronym is already in json file,\n\ndo you want to update?")
-            if rst == QMessageBox.StandardButton.Yes:
-                tmp_json_dict[item] = tips_str
-            else:
+            ret = self.msgbox.question(self, "", "This acronym is already in json file, \n\ndo you want to update?")
+            if ret == QMessageBox.StandardButton.No:
                 return True
+            tmp_json_dict[item] = tips_str
         else:
-            rst = self.msgbox.question(self, "", "\nDo you want to add this new acronym?\n")
-            if rst == QMessageBox.StandardButton.Yes:
-                tmp_json_dict[combobox_str] = tips_str
-            else:
+            ret = self.msgbox.question(self, "", "\nDo you want to add this new acronym?\n")
+            if ret == QMessageBox.StandardButton.No:
                 return True
+            tmp_json_dict[combobox_str] = tips_str
 
         ret = json_ops.file_write(tmp_json_dict)
         if not ret.value == 0:
