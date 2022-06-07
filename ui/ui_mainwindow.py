@@ -33,6 +33,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setMinimumSize(QSize(451, 271))
         MainWindow.setMaximumSize(QSize(451, 271))
         font = QFont()
         font.setPointSize(10)
