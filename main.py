@@ -1,8 +1,7 @@
-
-
 import os
 import sys
 import time
+from tkinter.messagebox import YES
 from log import Log
 import global_var as gl
 import resrc.resource as res
@@ -104,21 +103,23 @@ class MainWindow(QMainWindow):
 
         tmp_flag = False
         for item in tmp_json_dict:
-            if combobox_str.upper() == item.upper() and not tips_str == tmp_json_dict[item]:
+            if combobox_str.upper() == item.upper():
+                if tips_str == tmp_json_dict[item]:
+                    return True
                 tmp_flag = True
                 break
         if tmp_flag:
-            rst = self.msgbox.question(self, "", "This acronym is already in json,\n\ndo you want to update?")
-            if rst:
+            rst = self.msgbox.question(self, "", "This acronym is already in json file,\n\ndo you want to update?")
+            if rst == QMessageBox.StandardButton.Yes:
                 tmp_json_dict[item] = tips_str
             else:
-                return False
+                return True
         else:
             rst = self.msgbox.question(self, "", "\nDo you want to add this new acronym?\n")
-            if rst:
+            if rst == QMessageBox.StandardButton.Yes:
                 tmp_json_dict[combobox_str] = tips_str
             else:
-                return False
+                return True
 
         ret = json_ops.file_write(tmp_json_dict)
         if not ret.value == 0:
@@ -161,6 +162,9 @@ class MainWindow(QMainWindow):
             os.system(f'xdg-open {gl.GuiInfo["json_file"]}')
 
     def action_exit(self):
+        if self.workthread.isRunning():
+            self.workthread.run_flag = False
+            self.workthread.quit()
         sys.exit()
 
     def action_open_log(self):
